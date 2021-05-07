@@ -28,6 +28,14 @@
       a.self-reference:link:not(:hover, :focus) {
         text-decoration: none;
       }
+
+      .unicode-bom:before {
+        content: "BOM";
+        border: 1px solid red;
+        background-color: #884444;
+        border-radius: 5px;
+        padding: 1px 3px;
+      }
     </style>
   </head>
 
@@ -89,6 +97,12 @@
         </li>
         <li>
           <a href="#E086">E086: redundant delete statement on variable</a>
+        </li>
+        <li>
+          <a href="#E095"
+            >E095: Unicode byte order mark (BOM) cannot appear before #! at
+            beginning of script</a
+          >
         </li>
       </ul>
       <article id="E001">
@@ -502,6 +516,31 @@ console.log(x);
 </code></pre>
         </figure>
       </article>
+      <article id="E095">
+        <h2>
+          <a class="self-reference" href="#E095"
+            >E095: Unicode byte order mark (BOM) cannot appear before #! at
+            beginning of script</a
+          >
+        </h2>
+        <p>
+          A script cannot have Unicode byte order mark (BOM) before
+          <code>#!</code>
+        </p>
+        <figure>
+          <pre><code><span class='unicode-bom'>﻿</span>#!/usr/bin/env node
+let x = 3;
+console.log(x);
+</code></pre>
+        </figure>
+        <p>To fix this error, remove the Unicode BOM before <code>#!</code></p>
+        <figure>
+          <pre><code>#!/usr/bin/env node
+let x = 3;
+console.log(x);
+</code></pre>
+        </figure>
+      </article>
     </main>
 
     <footer>
@@ -522,8 +561,6 @@ console.log(x);
         </ul>
       </nav>
     </footer>
-
-    <script type="module" src="benchmark.mjs"></script>
   </body>
 </html>
 
