@@ -1107,6 +1107,10 @@ void lexer::parse_number() {
   QLJS_ASSERT(this->is_digit(this->input_[0]) || this->input_[0] == '.');
   const char8* input = this->input_;
   const char8* number_begin = input;
+  if (strlen(input) > 18) {
+    this->error_reporter_->report(error_number_literal_will_lose_precision{
+        source_code_span(input, this->parse_identifier(input).after)});
+  }
 
   auto consume_garbage = [this, &input]() {
     const char8* garbage_begin = input;
