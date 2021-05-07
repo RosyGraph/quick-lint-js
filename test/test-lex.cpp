@@ -482,6 +482,23 @@ TEST_F(test_lex, lex_number_with_trailing_garbage) {
       });
 }
 
+/*$$ BEGIN NEW TESTS */
+/*
+> .99999999999999999
+1
+> 9999999999999999
+10000000000000000
+*/
+TEST_F(test_lex, report_number_literal_will_lose_precision) {
+  padded_string code(u8"9999999999999999"_sv);
+  error_collector errors;
+  lexer l(&code, &errors);
+
+  EXPECT_THAT(errors.errors,
+              ElementsAre(ERROR_TYPE_FIELD(error_number_literal_will_lose_precision,
+                                           where, testing::_)));
+}
+
 TEST_F(test_lex, lex_invalid_big_int_number) {
   this->check_tokens_with_errors(
       u8"12.34n"_sv, {token_type::number},

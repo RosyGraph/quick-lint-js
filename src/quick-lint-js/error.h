@@ -754,6 +754,12 @@
                delete_expression))                                             \
                                                                                \
   QLJS_ERROR_TYPE(                                                             \
+      error_number_literal_will_lose_precision, "E151",                        \
+      { source_code_span where; },                                             \
+      .warning(QLJS_TRANSLATABLE("number literal will lose precision"),        \
+               where))			                                               \
+                                                                               \
+  QLJS_ERROR_TYPE(                                                             \
       error_missing_operator_between_expression_and_arrow_function, "E063",    \
       { source_code_span where; },                                             \
       .error(QLJS_TRANSLATABLE(                                                \
